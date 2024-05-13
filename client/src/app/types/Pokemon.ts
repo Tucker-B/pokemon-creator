@@ -1,7 +1,53 @@
 export interface PokemonPokeApiResponse {
+    id: number;
     name: string;
     order: number;
     sprites: SpritesPokeApiResponse;
+    abilities: PokemonAbilitySet[];
+    moves: PokemonMoveSet[];
+    stats: PokemonStatSet[];
+    types: PokemonTypeSet[];
+}
+
+export interface PokemonMoveSet {
+    move: PokemonMove;
+}
+
+export interface PokemonMove {
+    name: string;
+    url: string;
+}
+
+export interface PokemonAbilitySet {
+    ability: PokemonAbility;
+    is_hidden: boolean;
+    slot: number;
+}
+
+export interface PokemonAbility {
+    name: string;
+    url: string;
+}
+
+export interface PokemonStatSet {
+    base_stat: number;
+    effort: number;
+    stat: PokemonStat;
+}
+
+export interface PokemonStat {
+    name: string;
+    url: string;
+}
+
+export interface PokemonTypeSet {
+    slot: number;
+    type: PokemonType;
+}
+
+export interface PokemonType {
+    name: string;
+    url: string;
 }
 
 export interface SpritesPokeApiResponse {
