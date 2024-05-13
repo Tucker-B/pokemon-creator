@@ -68,9 +68,8 @@ export class PokedexComponent implements OnInit {
       } else {
         this.filterPokemonList();
       }
-
-
-
+    } else {
+      this.setPokemonList();
     }
   }
 
