@@ -1,7 +1,8 @@
 <div class="container">
     <div class="d-flex flex-column p-4 gap-4 py-md-5 align-items-center justify-content-center">
         <form class="col-12 col-lg-auto mb-3 mb-lg-0" style="width: 50rem;" role="search">
-            <input type="search" class="form-control" placeholder="Search..." aria-label="Search">
+            <input type="search" class="form-control" placeholder="Search..." aria-label="Search" name="searchText"
+                [(ngModel)]="searchText" (change)="searchPokemon()">
         </form>
         <div class="list-group">
             <a *ngFor="let pokemon of pokemonList; index as i" [routerLink]="['/pokedex', pokemon.name]"
@@ -14,7 +15,8 @@
                             <h2 style="padding-left: 1rem;" class="mb-0">{{pokemon.name.charAt(0).toUpperCase() +
                                 pokemon.name.slice(1)}}</h2>
                         </div>
-                        <small class="opacity-50 text-nowrap">Pokedex Num. {{((this.pageNumber - 1) * 20) + i + 1
+                        <small class="opacity-50 text-nowrap">Pokedex #{{ pokemon.url.split("/pokemon/")[1].replace("/",
+                            "")
                             }}</small>
                     </div>
                 </div>
@@ -22,17 +24,26 @@
         </div>
 
         <div class="d-flex flex-row align-items-center justify-content-center w-100">
+            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: 1}" *ngIf="pageNumber - 1 > 1">
+                &lt; </a>
             <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber - 1}"
-                *ngIf="pageNumber >= 2">{{pageNumber - 1}}</a>
-            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber}">{{pageNumber}}</a>
-            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 1}">{{pageNumber +
+                *ngIf="pageNumber >= 2 && pageNumber - 1 < 67">{{pageNumber - 1}}</a>
+            <a class="page-number active-page" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber}"
+                *ngIf="pageNumber < 67">{{pageNumber}}</a>
+            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 1}"
+                *ngIf="pageNumber + 1 < 67">{{pageNumber +
                 1}}</a>
-            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 2}">{{pageNumber +
+            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 2}"
+                *ngIf="pageNumber + 2 < 67">{{pageNumber +
                 2}}</a>
-            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 3}">{{pageNumber +
+            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 3}"
+                *ngIf="pageNumber + 3 < 67">{{pageNumber +
                 3}}</a>
-            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 4}">{{pageNumber +
+            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: pageNumber + 4}"
+                *ngIf="pageNumber + 4 < 67">{{pageNumber +
                 4}}</a>
+            <a class="page-number" [routerLink]="['/pokedex']" [queryParams]="{page: 66}"
+                *ngIf="pageNumber + 4 < 66">&gt;</a>
         </div>
     </div>
 </div>

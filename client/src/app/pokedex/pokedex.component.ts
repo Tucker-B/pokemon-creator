@@ -10,7 +10,10 @@ import { ActivatedRoute } from '@angular/router';
 })
 export class PokedexComponent implements OnInit {
   pokemonList: PokemonGetAllResultPokeApiResponse[] = [];
+  allPokemonList: PokemonGetAllResultPokeApiResponse[] = [];
   pageNumber: number = 1;
+  searchText: string = "";
+
   constructor(private readonly pokeapiService: PokeapiService, private route: ActivatedRoute) { }
 
   ngOnInit(): void {
@@ -44,5 +47,37 @@ export class PokedexComponent implements OnInit {
     })
   }
 
+  searchPokemon(): void {
+    console.log("Searching..");
+    console.log(`searchText: ${this.searchText}`);
+
+    if (this.searchText) {
+      console.log(`allPokemonList: ${this.allPokemonList}`);
+
+      if (!this.allPokemonList || this.allPokemonList.length < 1) {
+        console.log("allPokemonList empty");
+        this.pokeapiService.getPokemonList(0, 1302).subscribe({
+          next: (pokemonList) => {
+            console.log("calling service");
+            this.allPokemonList = pokemonList.results;
+            this.filterPokemonList();
+          },
+          error: (err) => console.log(JSON.stringify(err)),
+          complete: () => console.log("Finished calling poke api")
+        })
+      } else {
+        this.filterPokemonList();
+      }
+    } else {
+      this.setPokemonList();
+    }
+  }
+
+  filterPokemonList(): void {
+    this.pokemonList = this.allPokemonList.filter(pokemon => {
+      return pokemon.name.includes(this.searchText);
+    });
+    console.log(JSON.stringify(this.pokemonList));
+  }
 
 }

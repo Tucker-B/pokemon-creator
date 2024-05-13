@@ -4,3 +4,7 @@
     font-size: large;
     text-decoration: none;
 }
+
+.active-page {
+    font-weight: bolder;
+}
